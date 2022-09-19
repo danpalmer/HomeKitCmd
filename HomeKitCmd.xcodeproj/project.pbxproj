@@ -57,8 +57,8 @@
 		374EC3A828D7599A000216B9 /* HomeKitCmd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomeKitCmd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC3AA28D7599A000216B9 /* HKCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCApp.swift; sourceTree = "<group>"; };
 		374EC3AE28D7599B000216B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		374EC3B028D7599B000216B9 /* HomeKitCmd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HomeKitCmd.entitlements; sourceTree = "<group>"; };
 		374EC3B728D75EE6000216B9 /* HKCRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCRunner.swift; sourceTree = "<group>"; };
+		37F4B5D228D9051E001B08D3 /* HomeKitCmd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HomeKitCmd.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +127,7 @@
 				3705A2F128D79A6E0054F412 /* HKCModel.swift */,
 				3705A2F628D8ACA00054F412 /* HKCInfoWindow.swift */,
 				374EC3AE28D7599B000216B9 /* Assets.xcassets */,
-				374EC3B028D7599B000216B9 /* HomeKitCmd.entitlements */,
+				37F4B5D228D9051E001B08D3 /* HomeKitCmd.entitlements */,
 			);
 			path = HomeKitCmd;
 			sourceTree = "<group>";
