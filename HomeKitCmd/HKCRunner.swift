@@ -3,10 +3,10 @@ import HomeKit
 
 class HKCRunner: NSObject {
     private let homeKit = HMHomeManager()
-    private let command: HKCCommand
+    private let command: HKCParsedCommand
     private let completion: (String, Int32) -> Never
 
-    init(command: HKCCommand, completion: @escaping (String, Int32) -> Never) {
+    init(command: HKCParsedCommand, completion: @escaping (String, Int32) -> Never) {
         self.command = command
         self.completion = completion
         super.init()
@@ -17,8 +17,25 @@ class HKCRunner: NSObject {
         switch (self.command) {
         case .list:
             list(homes)
-        case let .toggleLight(home: home, accessory: accessory, service: service, characteristic: characteristic):
-            toggleLight(homes, home: home, accessory: accessory, service: service, characteristic: characteristic)
+            return
+        case let .writeValue(
+            home: home,
+            accessory: accessory,
+            service: service,
+            characteristic: characteristic,
+            value: value
+        ):
+            writeValue(
+                homes,
+                home: home,
+                accessory: accessory,
+                service: service,
+                characteristic: characteristic,
+                value: value
+            )
+            return
+        case .info:
+            return
         }
     }
 
@@ -35,26 +52,26 @@ class HKCRunner: NSObject {
         completion(result, 0)
     }
 
-    private func toggleLight(_ homes: [HMHome], home: String, accessory: String, service: String, characteristic: String) {
-        guard let home = homes.first(where: { $0.uniqueIdentifier.uuidString == home }) else {
+    private func writeValue(_ homes: [HMHome], home: UUID, accessory: UUID, service: UUID, characteristic: UUID, value: String) {
+        guard let home = homes.first(where: { $0.uniqueIdentifier == home }) else {
             completion("Unknown home", 1)
         }
 
         guard
-            let accessory = home.accessories.first(where: { $0.uniqueIdentifier.uuidString == accessory }),
+            let accessory = home.accessories.first(where: { $0.uniqueIdentifier == accessory }),
             !accessory.isBlocked
         else {
             completion("Unknown accessory", 1)
         }
 
         guard
-            let service = accessory.services.first(where: { $0.uniqueIdentifier.uuidString == service }),
+            let service = accessory.services.first(where: { $0.uniqueIdentifier == service }),
             service.isUserInteractive
         else {
             completion("Unknown service", 1)
         }
 
-        guard let characteristic = service.characteristics.first(where: { $0.uniqueIdentifier.uuidString == characteristic }) else {
+        guard let characteristic = service.characteristics.first(where: { $0.uniqueIdentifier == characteristic }) else {
             completion("Unknown characteristic", 1)
         }
 
@@ -63,7 +80,7 @@ class HKCRunner: NSObject {
                 self.completion("Failed to read accessory state", 1)
             }
 
-            
+
         }
     }
 }

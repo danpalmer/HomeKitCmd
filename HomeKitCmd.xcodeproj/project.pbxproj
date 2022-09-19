@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3705A2F228D79A6E0054F412 /* HKCModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3705A2F128D79A6E0054F412 /* HKCModel.swift */; };
+		3705A2F528D899F90054F412 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 3705A2F428D899F90054F412 /* ArgumentParser */; };
+		3705A2F728D8ACA00054F412 /* HKCInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3705A2F628D8ACA00054F412 /* HKCInfoWindow.swift */; };
 		3723164728D78C9F00A117A8 /* HKCCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3723164628D78C9F00A117A8 /* HKCCommand.swift */; };
 		3723164928D7925000A117A8 /* HKCAppKitBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3723164828D7925000A117A8 /* HKCAppKitBridge.swift */; };
 		3723165228D7931900A117A8 /* HomeKitAppKitBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 3723165128D7931900A117A8 /* HomeKitAppKitBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -45,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		3705A2F128D79A6E0054F412 /* HKCModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCModel.swift; sourceTree = "<group>"; };
+		3705A2F628D8ACA00054F412 /* HKCInfoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCInfoWindow.swift; sourceTree = "<group>"; };
 		3723164628D78C9F00A117A8 /* HKCCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCCommand.swift; sourceTree = "<group>"; };
 		3723164828D7925000A117A8 /* HKCAppKitBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCAppKitBridge.swift; sourceTree = "<group>"; };
 		3723164F28D7931900A117A8 /* HomeKitAppKitBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HomeKitAppKitBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3705A2F528D899F90054F412 /* ArgumentParser in Frameworks */,
 				3723165928D793D200A117A8 /* HomeKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,10 +123,11 @@
 				374EC3AA28D7599A000216B9 /* HKCApp.swift */,
 				374EC3B728D75EE6000216B9 /* HKCRunner.swift */,
 				3723164628D78C9F00A117A8 /* HKCCommand.swift */,
-				374EC3AE28D7599B000216B9 /* Assets.xcassets */,
-				374EC3B028D7599B000216B9 /* HomeKitCmd.entitlements */,
 				3723164828D7925000A117A8 /* HKCAppKitBridge.swift */,
 				3705A2F128D79A6E0054F412 /* HKCModel.swift */,
+				3705A2F628D8ACA00054F412 /* HKCInfoWindow.swift */,
+				374EC3AE28D7599B000216B9 /* Assets.xcassets */,
+				374EC3B028D7599B000216B9 /* HomeKitCmd.entitlements */,
 			);
 			path = HomeKitCmd;
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 			);
 			name = HomeKitCmd;
 			packageProductDependencies = (
+				3705A2F428D899F90054F412 /* ArgumentParser */,
 			);
 			productName = HomeKitCmd;
 			productReference = 374EC3A828D7599A000216B9 /* HomeKitCmd.app */;
@@ -209,6 +215,7 @@
 			);
 			mainGroup = 374EC36728D75607000216B9;
 			packageReferences = (
+				3705A2F328D899F90054F412 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 374EC37128D75607000216B9 /* Products */;
 			projectDirPath = "";
@@ -255,6 +262,7 @@
 				3723164928D7925000A117A8 /* HKCAppKitBridge.swift in Sources */,
 				374EC3AB28D7599A000216B9 /* HKCApp.swift in Sources */,
 				374EC3B828D75EE6000216B9 /* HKCRunner.swift in Sources */,
+				3705A2F728D8ACA00054F412 /* HKCInfoWindow.swift in Sources */,
 				3723164728D78C9F00A117A8 /* HKCCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,6 +472,7 @@
 					"$(SDKROOT)/System/iOSSupport/System/Library/PrivateFrameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HomeKitCmd/Info.plist;
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "HomeKitCmd uses HomeKit access to list and control your accessories. No changes are made to homes or accessories.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -509,6 +518,7 @@
 					"$(SDKROOT)/System/iOSSupport/System/Library/PrivateFrameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HomeKitCmd/Info.plist;
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "HomeKitCmd uses HomeKit access to list and control your accessories. No changes are made to homes or accessories.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -568,6 +578,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3705A2F328D899F90054F412 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3705A2F428D899F90054F412 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3705A2F328D899F90054F412 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 374EC36828D75607000216B9 /* Project object */;
 }
