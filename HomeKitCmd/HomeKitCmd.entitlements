@@ -5,6 +5,6 @@
 	<key>com.apple.developer.homekit</key>
 	<true/>
 	<key>com.apple.security.app-sandbox</key>
-	<string></string>
+	<true/>
 </dict>
 </plist>
