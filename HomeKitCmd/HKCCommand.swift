@@ -8,9 +8,11 @@ struct HKCCommand: ParsableCommand {
         subcommands: [List.self, WriteValue.self, ReadValue.self]
     )
 
+    @Flag var help: Bool = false
+
     static func parseCommand(_ args: [String]) -> HKCParsedCommand {
         do {
-            var command = try parseAsRoot(args)
+            let command = try parseAsRoot(args)
             switch command {
             case let command as HKCCommand.List:
                 return .list(all: command.includeUnsupported)
@@ -29,8 +31,13 @@ struct HKCCommand: ParsableCommand {
                     service: command.service,
                     characteristic: command.characteristic
                 )
+            case var command as HKCCommand:
+                if command.help {
+                    try command.run()
+                    exit()
+                }
+                return .info
             default:
-                try command.run()
                 return .info
             }
         } catch {
