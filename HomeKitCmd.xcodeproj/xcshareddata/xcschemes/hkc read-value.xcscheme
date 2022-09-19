@@ -51,6 +51,28 @@
             ReferencedContainer = "container:HomeKitCmd.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "read-value"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--home=0A54FCEE-523A-55B9-B80D-EDE1F724726E"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--accessory=B7C0CE84-4ADF-54F7-907B-0432D3238C70 "
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--service=A307FDC2-746E-5C89-B01E-14187B6A4789 "
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--characteristic=D8D8261D-E20B-5FFE-828A-2C83453DC65C"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

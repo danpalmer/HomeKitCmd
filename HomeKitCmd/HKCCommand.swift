@@ -10,10 +10,10 @@ struct HKCCommand: ParsableCommand {
 
     static func parseCommand(_ args: [String]) -> HKCParsedCommand {
         do {
-            let command = try parseAsRoot(args)
+            var command = try parseAsRoot(args)
             switch command {
             case let command as HKCCommand.List:
-                return .list(all: command.all)
+                return .list(all: command.includeUnsupported)
             case let command as HKCCommand.WriteValue:
                 return .writeValue(
                     home: command.home,
@@ -23,8 +23,14 @@ struct HKCCommand: ParsableCommand {
                     value: command.value
                 )
             case let command as HKCCommand.ReadValue:
-                return .list(all: true)
+                return .readValue(
+                    home: command.home,
+                    accessory: command.accessory,
+                    service: command.service,
+                    characteristic: command.characteristic
+                )
             default:
+                try command.run()
                 return .info
             }
         } catch {
@@ -35,7 +41,7 @@ struct HKCCommand: ParsableCommand {
 
 extension HKCCommand {
     struct List: ParsableCommand {
-        @Flag var all: Bool = false
+        @Flag var includeUnsupported: Bool = false
     }
 }
 
@@ -51,13 +57,17 @@ extension HKCCommand {
 
 extension HKCCommand {
     struct ReadValue: ParsableCommand {
-
+        @Option var home: UUID
+        @Option var accessory: UUID
+        @Option var service: UUID
+        @Option var characteristic: UUID
     }
 }
 
 enum HKCParsedCommand {
     case list(all: Bool)
     case writeValue(home: UUID, accessory: UUID, service: UUID, characteristic: UUID, value: String)
+    case readValue(home: UUID, accessory: UUID, service: UUID, characteristic: UUID)
     case info
 }
 

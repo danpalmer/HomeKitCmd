@@ -15,8 +15,8 @@ class HKCRunner: NSObject {
 
     private func run(_ homes: [HMHome]) {
         switch (self.command) {
-        case .list:
-            list(homes)
+        case let .list(all: all):
+            list(homes, all: all)
             return
         case let .writeValue(
             home: home,
@@ -34,53 +34,140 @@ class HKCRunner: NSObject {
                 value: value
             )
             return
+        case let .readValue(
+            home: home,
+            accessory: accessory,
+            service: service,
+            characteristic: characteristic
+        ):
+            readValue(
+                homes,
+                home: home,
+                accessory: accessory,
+                service: service,
+                characteristic: characteristic
+            )
         case .info:
             return
         }
     }
 
-    private func list(_ homes: [HMHome]) {
-        let homes: [Home] = homes.map { Home($0) }
-
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-
-        guard let result = try? String(data: encoder.encode(homes), encoding: .utf8) else {
-            completion("Failed to serialise output", 1)
-        }
-
+    private func list(_ homes: [HMHome], all: Bool) {
+        let homes: [Home] = homes.map { Home($0, filterUnsupported: !all) }
+        let result = renderJSON(homes)
         completion(result, 0)
     }
 
-    private func writeValue(_ homes: [HMHome], home: UUID, accessory: UUID, service: UUID, characteristic: UUID, value: String) {
+    private func writeValue(
+        _ homes: [HMHome],
+        home: UUID,
+        accessory: UUID,
+        service: UUID,
+        characteristic: UUID,
+        value: String
+    ) {
+        let characteristic = findAccessoryCharacteristic(
+            homes,
+            home: home,
+            accessory: accessory,
+            service: service,
+            characteristic: characteristic
+        )
+
+        let value = characteristicValue(
+            value,
+            characteristicType: characteristic.characteristicType
+        )
+
+        characteristic.writeValue(value) { error in
+            guard error == nil else {
+                self.completion(self.renderJSONError("Failed to write accessory value", error), 1)
+            }
+        }
+    }
+
+    private func readValue(
+        _ homes: [HMHome],
+        home: UUID,
+        accessory: UUID,
+        service: UUID,
+        characteristic: UUID
+    ) {
+        let characteristic = findAccessoryCharacteristic(
+            homes,
+            home: home,
+            accessory: accessory,
+            service: service,
+            characteristic: characteristic
+        )
+        characteristic.readValue { error in
+            guard error == nil else {
+                self.completion(self.renderJSONError("Failed to read accessory value", error), 1)
+            }
+
+            let value = Characteristic(characteristic, filterUnsupported: false)?.value
+            self.completion(self.renderJSON(value), 0)
+        }
+    }
+
+    private func findAccessoryCharacteristic(_ homes: [HMHome], home: UUID, accessory: UUID, service: UUID, characteristic: UUID) -> HMCharacteristic {
         guard let home = homes.first(where: { $0.uniqueIdentifier == home }) else {
-            completion("Unknown home", 1)
+            completion(renderJSONError("Unknown home"), 1)
         }
 
         guard
             let accessory = home.accessories.first(where: { $0.uniqueIdentifier == accessory }),
             !accessory.isBlocked
         else {
-            completion("Unknown accessory", 1)
+            completion(renderJSONError("Unknown accessory"), 1)
         }
 
         guard
             let service = accessory.services.first(where: { $0.uniqueIdentifier == service }),
             service.isUserInteractive
         else {
-            completion("Unknown service", 1)
+            completion(renderJSONError("Unknown service"), 1)
         }
 
         guard let characteristic = service.characteristics.first(where: { $0.uniqueIdentifier == characteristic }) else {
-            completion("Unknown characteristic", 1)
+            completion(renderJSONError("Unknown characteristic"), 1)
         }
 
-        characteristic.readValue { error in
-            guard error == nil else {
-                self.completion("Failed to read accessory state", 1)
+        return characteristic
+    }
+
+    private func renderJSON(_ value: Encodable) -> String {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+
+        guard let result = try? String(data: encoder.encode(value), encoding: .utf8) else {
+            completion("Failed to serialise output", 1)
+        }
+
+        return result
+    }
+
+    private func renderJSONError(_ message: String, _ error: Error? = nil) -> String {
+        return renderJSON(["message": message, "error": error?.localizedDescription ?? "unknown"])
+    }
+
+    private func characteristicValue(_ value: String, characteristicType: String) -> Any {
+        let decoder = JSONDecoder()
+        let data = Data(value.utf8)
+
+        do {
+            switch characteristicType {
+            case HMCharacteristicTypeOutletInUse:
+                return try decoder.decode(Bool.self, from: data)
+            case HMCharacteristicTypePowerState:
+                return try decoder.decode(Bool.self, from: data)
+            case HMCharacteristicTypeBrightness:
+                return try decoder.decode(Int.self, from: data)
+            default:
+                completion(renderJSONError("Unsupported characteristic type"), 1)
             }
-
-
+        } catch {
+            completion(renderJSONError("Failed to decode JSON value", error), 1)
         }
     }
 }

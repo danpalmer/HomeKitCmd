@@ -4,12 +4,16 @@ import HomeKit
 struct Home: Encodable {
     var name: String
     var isPrimary: Bool
+    var id: UUID
     var accessories: [Accessory]
 
-    init(_ home: HMHome) {
+    init(_ home: HMHome, filterUnsupported: Bool) {
         name = home.name
         isPrimary = home.isPrimary
-        accessories = home.accessories.map(Accessory.init)
+        id = home.uniqueIdentifier
+        accessories = home.accessories.map {
+            Accessory($0, filterUnsupported: filterUnsupported)
+        }
     }
 }
 
@@ -25,7 +29,7 @@ struct Accessory: Encodable {
     var room: Room?
     var services: [Service]
 
-    init(_ accessory: HMAccessory) {
+    init(_ accessory: HMAccessory, filterUnsupported: Bool) {
         name = accessory.name
         id = accessory.uniqueIdentifier
         description = "\(accessory.manufacturer ?? "") \(accessory.model ?? "")".trimmingCharacters(in: .whitespaces)
@@ -35,7 +39,9 @@ struct Accessory: Encodable {
         isIdentifiable = accessory.supportsIdentify
         category = Category(accessory.category)
         room = accessory.room.map(Room.init)
-        services = accessory.services.map(Service.init)
+        services = accessory.services.compactMap {
+            Service($0, filterUnsupported: filterUnsupported)
+        }
     }
 }
 
@@ -68,14 +74,20 @@ struct Service: Encodable {
     var isPrimary: Bool
     var characteristics: [Characteristic]
 
-    init(_ service: HMService) {
+    init?(_ service: HMService, filterUnsupported: Bool) {
         name = service.name
         type = service.serviceType
         description = service.localizedDescription
         id = service.uniqueIdentifier
         isInteractive = service.isUserInteractive
         isPrimary = service.isPrimaryService
-        characteristics = service.characteristics.map(Characteristic.init)
+        characteristics = service.characteristics.compactMap {
+            Characteristic($0, filterUnsupported: filterUnsupported)
+        }
+
+        if characteristics.isEmpty {
+            return nil
+        }
     }
 }
 
@@ -87,7 +99,7 @@ struct Characteristic: Encodable {
     var isReadable: Bool
     var value: Value
 
-    init(_ characteristic: HMCharacteristic) {
+    init?(_ characteristic: HMCharacteristic, filterUnsupported: Bool) {
         description = characteristic.localizedDescription
         id = characteristic.uniqueIdentifier
 
@@ -100,16 +112,17 @@ struct Characteristic: Encodable {
         case HMCharacteristicTypeOutletInUse:
             type = "HMCharacteristicTypeOutletInUse"
             value = parse(characteristic.value) { .bool(bool: $0) }
-            break
         case HMCharacteristicTypePowerState:
             type = "HMCharacteristicTypePowerState"
             value = parse(characteristic.value) { .bool(bool: $0) }
-            break
         case HMCharacteristicTypeBrightness:
             type = "HMCharacteristicTypeBrightness"
             value = parse(characteristic.value) { .percent(percent: $0) }
-            break
         default:
+            if filterUnsupported {
+                return nil
+            }
+
             type = "_unknown"
             value = .unknown(message: "Unknown characteristic type")
         }
