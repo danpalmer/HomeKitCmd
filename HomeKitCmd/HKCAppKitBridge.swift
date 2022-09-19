@@ -14,8 +14,7 @@ class HKCAppKitBridge: NSObject {
                 if let appKitControllerClass = bundle.classNamed("HomeKitAppKitBridge.HKCAppKitController") as? NSObject.Type {
                     appKitController = appKitControllerClass.init()
                 }
-            }
-            catch {
+            } catch {
                 NSLog("Error loading bridge framework: \(error)")
             }
         }
