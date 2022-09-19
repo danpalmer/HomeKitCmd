@@ -53,7 +53,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "read-value"
+            argument = "write-value"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--value=false"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

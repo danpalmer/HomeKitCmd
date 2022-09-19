@@ -83,6 +83,8 @@ class HKCRunner: NSObject {
             guard error == nil else {
                 self.completion(self.renderJSONError("Failed to write accessory value", error), 1)
             }
+
+            self.completion(self.renderJSON(["success": true]), 0)
         }
     }
 

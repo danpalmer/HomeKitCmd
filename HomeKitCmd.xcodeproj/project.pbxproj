@@ -168,6 +168,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 374EC3B428D7599B000216B9 /* Build configuration list for PBXNativeTarget "HomeKitCmd" */;
 			buildPhases = (
+				377C1D3128D90EBF00FF2CFA /* ShellScript */,
 				374EC3A428D7599A000216B9 /* Sources */,
 				374EC3A528D7599A000216B9 /* Frameworks */,
 				374EC3A628D7599A000216B9 /* Resources */,
@@ -244,6 +245,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		377C1D3128D90EBF00FF2CFA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$EFFECTIVE_PLATFORM_NAME\" = \"-maccatalyst\" ] && [ \"$XCODE_VERSION_MAJOR\" = \"1400\" ]; then\n    echo \"Adding com.apple.developer.homekit entitlement\"\n    /usr/libexec/PlistBuddy -c \"Add :com.apple.developer.homekit bool true\" \"$TARGET_TEMP_DIR/$FULL_PRODUCT_NAME.xcent\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3723164B28D7931900A117A8 /* Sources */ = {
@@ -483,6 +505,7 @@
 				INFOPLIST_FILE = HomeKitCmd/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Home Kit Cmd";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "HomeKitCmd uses HomeKit access to list and control your accessories. No changes are made to homes or accessories.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -534,6 +557,7 @@
 				INFOPLIST_FILE = HomeKitCmd/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Home Kit Cmd";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "HomeKitCmd uses HomeKit access to list and control your accessories. No changes are made to homes or accessories.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
