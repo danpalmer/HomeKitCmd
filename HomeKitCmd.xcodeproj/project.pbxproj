@@ -54,7 +54,7 @@
 		3723165128D7931900A117A8 /* HomeKitAppKitBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeKitAppKitBridge.h; sourceTree = "<group>"; };
 		3723165628D7934300A117A8 /* HKCAppKitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCAppKitController.swift; sourceTree = "<group>"; };
 		3723165828D793D200A117A8 /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/iOSSupport/System/Library/PrivateFrameworks/HomeKit.framework; sourceTree = SDKROOT; };
-		374EC3A828D7599A000216B9 /* HomeKitCmd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomeKitCmd.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		374EC3A828D7599A000216B9 /* Commands for HomeKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Commands for HomeKit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC3AA28D7599A000216B9 /* HKCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCApp.swift; sourceTree = "<group>"; };
 		374EC3AE28D7599B000216B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		374EC3B728D75EE6000216B9 /* HKCRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCRunner.swift; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		374EC37128D75607000216B9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				374EC3A828D7599A000216B9 /* HomeKitCmd.app */,
+				374EC3A828D7599A000216B9 /* Commands for HomeKit.app */,
 				3723164F28D7931900A117A8 /* HomeKitAppKitBridge.framework */,
 			);
 			name = Products;
@@ -164,9 +164,9 @@
 			productReference = 3723164F28D7931900A117A8 /* HomeKitAppKitBridge.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		374EC3A728D7599A000216B9 /* HomeKitCmd */ = {
+		374EC3A728D7599A000216B9 /* Commands for HomeKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 374EC3B428D7599B000216B9 /* Build configuration list for PBXNativeTarget "HomeKitCmd" */;
+			buildConfigurationList = 374EC3B428D7599B000216B9 /* Build configuration list for PBXNativeTarget "Commands for HomeKit" */;
 			buildPhases = (
 				377C1D3128D90EBF00FF2CFA /* ShellScript */,
 				374EC3A428D7599A000216B9 /* Sources */,
@@ -179,12 +179,12 @@
 			dependencies = (
 				3723165D28D793D700A117A8 /* PBXTargetDependency */,
 			);
-			name = HomeKitCmd;
+			name = "Commands for HomeKit";
 			packageProductDependencies = (
 				3705A2F428D899F90054F412 /* ArgumentParser */,
 			);
 			productName = HomeKitCmd;
-			productReference = 374EC3A828D7599A000216B9 /* HomeKitCmd.app */;
+			productReference = 374EC3A828D7599A000216B9 /* Commands for HomeKit.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -222,7 +222,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				374EC3A728D7599A000216B9 /* HomeKitCmd */,
+				374EC3A728D7599A000216B9 /* Commands for HomeKit */,
 				3723164E28D7931900A117A8 /* HomeKitAppKitBridge */,
 			);
 		};
@@ -608,7 +608,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		374EC3B428D7599B000216B9 /* Build configuration list for PBXNativeTarget "HomeKitCmd" */ = {
+		374EC3B428D7599B000216B9 /* Build configuration list for PBXNativeTarget "Commands for HomeKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				374EC3B528D7599B000216B9 /* Debug */,

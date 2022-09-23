@@ -8,7 +8,7 @@ struct HKCInfoWindow: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("HomeKitCmd")
+            Text("Commands for HomeKit")
                 .font(.largeTitle)
             Text("Control HomeKit devices from the command line.")
                 .font(.headline)

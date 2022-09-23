@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "374EC3A728D7599A000216B9"
-               BuildableName = "HomeKitCmd.app"
-               BlueprintName = "HomeKitCmd"
+               BuildableName = "Commands for HomeKit.app"
+               BlueprintName = "Commands for HomeKit"
                ReferencedContainer = "container:HomeKitCmd.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "374EC3A728D7599A000216B9"
-            BuildableName = "HomeKitCmd.app"
-            BlueprintName = "HomeKitCmd"
+            BuildableName = "Commands for HomeKit.app"
+            BlueprintName = "Commands for HomeKit"
             ReferencedContainer = "container:HomeKitCmd.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
