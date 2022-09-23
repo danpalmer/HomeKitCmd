@@ -502,7 +502,6 @@
 					"$(SDKROOT)/System/iOSSupport/System/Library/PrivateFrameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HomeKitCmd/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Home Kit Cmd";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -554,7 +553,6 @@
 					"$(SDKROOT)/System/iOSSupport/System/Library/PrivateFrameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HomeKitCmd/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Home Kit Cmd";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
