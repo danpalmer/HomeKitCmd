@@ -14,7 +14,7 @@
 		3723164928D7925000A117A8 /* HKCAppKitBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3723164828D7925000A117A8 /* HKCAppKitBridge.swift */; };
 		3723165228D7931900A117A8 /* HomeKitAppKitBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 3723165128D7931900A117A8 /* HomeKitAppKitBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3723165728D7934300A117A8 /* HKCAppKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3723165628D7934300A117A8 /* HKCAppKitController.swift */; };
-		3723165928D793D200A117A8 /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3723165828D793D200A117A8 /* HomeKit.framework */; platformFilter = maccatalyst; };
+		3723165928D793D200A117A8 /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3723165828D793D200A117A8 /* HomeKit.framework */; };
 		3723165B28D793D700A117A8 /* HomeKitAppKitBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3723164F28D7931900A117A8 /* HomeKitAppKitBridge.framework */; platformFilter = maccatalyst; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		374EC3AB28D7599A000216B9 /* HKCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC3AA28D7599A000216B9 /* HKCApp.swift */; };
 		374EC3AF28D7599B000216B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 374EC3AE28D7599B000216B9 /* Assets.xcassets */; };
@@ -58,6 +58,7 @@
 		374EC3AA28D7599A000216B9 /* HKCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCApp.swift; sourceTree = "<group>"; };
 		374EC3AE28D7599B000216B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		374EC3B728D75EE6000216B9 /* HKCRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKCRunner.swift; sourceTree = "<group>"; };
+		379E014E28E0E99B00733490 /* Commands-for-HomeKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Commands-for-HomeKit-Info.plist"; sourceTree = "<group>"; };
 		37F4B5D228D9051E001B08D3 /* HomeKitCmd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HomeKitCmd.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +129,7 @@
 				3705A2F628D8ACA00054F412 /* HKCInfoWindow.swift */,
 				374EC3AE28D7599B000216B9 /* Assets.xcassets */,
 				37F4B5D228D9051E001B08D3 /* HomeKitCmd.entitlements */,
+				379E014E28E0E99B00733490 /* Commands-for-HomeKit-Info.plist */,
 			);
 			path = HomeKitCmd;
 			sourceTree = "<group>";
@@ -172,6 +174,7 @@
 				374EC3A528D7599A000216B9 /* Frameworks */,
 				374EC3A628D7599A000216B9 /* Resources */,
 				3723165E28D793D700A117A8 /* Embed Frameworks */,
+				379E014D28E0E3AE00733490 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -244,6 +247,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		379E014D28E0E3AE00733490 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -z \"$CODE_SIGN_IDENTITY\" ] ; then\n    echo \"CODE_SIGN_IDENTITY needs to be non-empty for codesigning frameworks!\"\nfi\n\nSAVEIFS=$IFS\nIFS=$(echo -en \"\\n\\b\")\n\nFRAMEWORK_DIR=\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n\n# Loop through all frameworks\nFRAMEWORKS=`find \"${FRAMEWORK_DIR}\" -type d -name \"*.framework\" | sed -e \"s/\\(.*\\)/\\1\\/Versions\\/A\\//\"`\nRESULT=$?\nif [[ $RESULT != 0 ]] ; then\n    exit 1\nfi\n\necho \"Signing '${FRAMEWORKS}'\"\n`codesign -f -v -s \"${CODE_SIGN_IDENTITY}\" \"${FRAMEWORKS}\"`\nRESULT=$?\nif [[ $RESULT != 0 ]] ; then\n    exit 1\nfi\n\n# restore $IFS\nIFS=$SAVEIFS\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3723164B28D7931900A117A8 /* Sources */ = {
@@ -486,16 +511,19 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "HomeKitCmd/Commands-for-HomeKit-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Commands for HomeKit";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "Access to discover accessories and control accessory behaviour.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
@@ -535,16 +563,19 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "HomeKitCmd/Commands-for-HomeKit-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Commands for HomeKit";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "Access to discover accessories and control accessory behaviour.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
